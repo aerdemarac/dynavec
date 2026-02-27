@@ -4,11 +4,13 @@
 
 int main(){
     IVec* vec = ivec_init();
-    for(size_t i = 0 ; i < ivec_capacity(vec); i++){
-        ivec_push(vec,pow(2,i));
+    size_t lim = pow(10,6);
+    for(size_t i = 0; i < lim ; i++ ){
+        ivec_push(vec, i);
     }
-    size_t index = 5;
-    printf("pow(2,%zu) = %d",index,ivec_get(vec,index));
+    for(size_t i = 0; i < lim ; i++ ){
+        ivec_pop(vec);
+    }
     ivec_free(&vec);
     return 0;
 }

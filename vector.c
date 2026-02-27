@@ -1,5 +1,5 @@
 #include "vector.h"
-
+#include "util.h"
 
 struct IVec {
     size_t size;
@@ -73,6 +73,9 @@ int ivec_get(IVec* vec,size_t index){
         
     }
 }
+//void ivec_set(IVec* vec,size_t index,int num){
+//    // SET Implementation if index is valid according to size set it to value 
+//}
 
 void ivec_push(IVec* vec,int num){
     if(!vec){
@@ -86,7 +89,7 @@ void ivec_push(IVec* vec,int num){
     else{
         int* dummy = realloc(vec->data,vec->el_size * (vec->capacity * 2));
         if(!dummy){
-            fprintf(stderr,"Container Re-Allocation Failed");
+            fprintf(stderr,"Container Re-Allocation Failed push");
             return;
         }
         else{
@@ -104,11 +107,28 @@ void ivec_push(IVec* vec,int num){
 }
 
 void ivec_pop(IVec* vec){
-    //POP MECHANICS
     if(!vec){
         puts("Null ptr passed to the pop()");
         return;
+    }
+    if(vec->size <= 0){
+        puts("This vector cannot popable...");
+        return;
 
+    }
+
+    *(vec->data + vec->size - 1) = 0;
+    vec->size--;
+
+    if(vec->size >= 20 && vec->size == vec->capacity / 2){ // will be re-implemented as  if (size == cap / 4 ) new cap /= 2;
+        int* dummy = realloc(vec->data, next_powerof_two(vec->size) * vec->el_size);
+        if(!dummy){
+            fprintf(stderr,"Container Re-Allocation Failed pop");
+            return;
+        }
+        vec->data = dummy;
+        dummy = NULL;
+        vec->capacity = next_powerof_two(vec->size);
     }
 
 }
@@ -126,3 +146,4 @@ void ivec_free(IVec** ptr_vec){
     free(*ptr_vec);
     *ptr_vec = NULL;
 }
+
