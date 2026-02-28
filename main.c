@@ -4,13 +4,15 @@
 
 int main(){
     IVec* vec = ivec_init();
-    size_t lim = pow(10,6);
-    for(size_t i = 0; i < lim ; i++ ){
-        ivec_push(vec, i);
+    size_t size = 1;
+    int arr[size];
+    for(size_t i = 0; i<size;i++){
+        arr[i] = i;
     }
-    for(size_t i = 0; i < lim ; i++ ){
-        ivec_pop(vec);
-    }
+    ivec_assign(vec, size,arr);
+    ivec_set(vec,0,69);
+    ivec_push(vec,31);
+    ivec_clear(vec);
     ivec_free(&vec);
     return 0;
 }

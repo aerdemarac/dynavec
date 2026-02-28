@@ -1,5 +1,5 @@
 #include "vector.h"
-#include "util.h"
+
 
 struct IVec {
     size_t size;
@@ -73,9 +73,36 @@ int ivec_get(IVec* vec,size_t index){
         
     }
 }
-//void ivec_set(IVec* vec,size_t index,int num){
-//    // SET Implementation if index is valid according to size set it to value 
-//}
+void ivec_set(IVec* vec,size_t index,int num){
+    // SET Implementation if index is valid according to size set it to value 
+    if(!vec){
+        puts("Null ptr passed to the set()");
+        return;
+    }
+    if(index < vec->size){
+        *(vec->data + index) = num;
+    }
+    else{
+        puts("Invalid Index Passed to the set()");
+        return;       
+    }
+
+
+}
+
+void ivec_assign(IVec* vec,size_t n,int* list){
+    if(!vec || !list || n == 0){
+        puts("Null ptr passed to the assing() or invalid init-list size");
+        return;
+    }
+    if(vec->size > 0){
+        puts("This array is not assignable by a list. Used _force");
+        return;
+    }
+    for(size_t i = 0; i < n ; i++){
+        ivec_push(vec,*(list + i));
+    }
+}
 
 void ivec_push(IVec* vec,int num){
     if(!vec){
@@ -98,10 +125,6 @@ void ivec_push(IVec* vec,int num){
             vec->capacity *= 2;
             *(vec->data + vec->size) = num;
             vec->size++;
-            size_t i; // Will be used to imitate zero initialize of the new allocated memory after the pushed number
-            for(i = vec->capacity / 2 + 1 ; i < vec->capacity ; i++){
-                *(vec->data + i) = 0;
-            }
         }
     }
 }
@@ -120,19 +143,26 @@ void ivec_pop(IVec* vec){
     *(vec->data + vec->size - 1) = 0;
     vec->size--;
 
-    if(vec->size >= 20 && vec->size == vec->capacity / 2){ // will be re-implemented as  if (size == cap / 4 ) new cap /= 2;
-        int* dummy = realloc(vec->data, next_powerof_two(vec->size) * vec->el_size);
+    if(vec->size >= 20 && vec->size == vec->capacity / 4){ 
+        int* dummy = realloc(vec->data, (vec->capacity / 2) * vec->el_size);
         if(!dummy){
             fprintf(stderr,"Container Re-Allocation Failed pop");
             return;
         }
         vec->data = dummy;
         dummy = NULL;
-        vec->capacity = next_powerof_two(vec->size);
+        vec->capacity /= 2;
     }
 
 }
 
+void ivec_clear(IVec* vec){
+    if(!vec){
+        puts("Null ptr passed to the clear()");
+        return;
+    }
+    vec->size = 0;
+}
 
 void ivec_free(IVec** ptr_vec){
     if(!ptr_vec){
