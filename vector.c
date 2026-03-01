@@ -1,5 +1,5 @@
 #include "vector.h"
-#define maxSafeSize (size_t)((SIZE_MAX / 2) + 1)
+#define maxSafeSize (size_t)(SIZE_MAX / 2) 
 
 struct IVec {
     size_t size;
@@ -30,73 +30,73 @@ struct UIVec {
 };
 
 
+static void fatal_terminate(const char* err);
+
 IVec* ivec_init(){
     IVec* vec;
     if(!(vec = calloc(1,sizeof(IVec)))){
-        fprintf(stderr,"Object Allocation Failed");
+        //Object Allocation Failed
         return NULL;
     }
-    //size =  auto 0 init by calloc
     vec->capacity = 32;
     vec->el_size = sizeof(int);
     if(!(vec->data = calloc(vec->capacity,vec->el_size))){
-        fprintf(stderr,"Container Allocation Failed");
+        //Container Allocation Failed
+        free(vec);
+        vec = NULL;
         return NULL;
     }
     return vec;
 }
 size_t ivec_size(const IVec* vec){
     if(!vec){
-        puts("Null ptr passed to the size()");
-        return 0;
+        return SIZE_MAX; // Error Handling by returning an impossible value 
     }
     return vec->size;
 }
 size_t ivec_capacity(const IVec* vec){
     if(!vec){
-        puts("Null ptr passed to the capacity()");
-        return 0;
+        return SIZE_MAX; // Error Handling by returning an impossible value 
     }
     return vec->capacity;
 }
 int ivec_get(const IVec* vec,size_t index){
     if(!vec){
-        puts("Null ptr passed to the get()");
-        return 0; // WILL RETURN A DISTINGUİSBLE ERROR VALUE LATER
+        fatal_terminate("Null Pointer Passed to the ivec_get()");
     }
     if(index < vec->size){
         return *(vec->data + index);
     }
     else{
-        puts("Invalid Index Passed to the get()");
-        return 0; // WILL RETURN A DISTINGUİSBLE ERROR VALUE LATER
-        
+        fatal_terminate("Out of bound access to the IVec by ivec_get()");
+        return 404; // Allready unreachable, just added to suppress compiler warnings 
     }
 }
 void ivec_set(IVec* vec,size_t index,int num){
     // SET Implementation if index is valid according to size set it to value 
     if(!vec){
-        puts("Null ptr passed to the set()");
+        fatal_terminate("Null Pointer Passed to the ivec_set()");
         return;
     }
     if(index < vec->size){
         *(vec->data + index) = num;
     }
     else{
-        puts("Invalid Index Passed to the set()");
+        fatal_terminate("Out of bound access to the IVec by ivec_set()");
         return;       
     }
-
 
 }
 
 void ivec_assign(IVec* vec,size_t n,int* list){
-    if(!vec || !list || n == 0){
-        puts("Null ptr passed to the assing() or invalid init-list size");
-        return;
+    if(!vec || !list){
+        fatal_terminate("Null Pointer Passed to the ivec_assing()");
     }
-    if(vec->size > 0){
-        puts("This array is not assignable by a list. Used _force");
+    if(n == 0){
+        fatal_terminate("Invalid initializer list size passed to the ivec_assign()");
+    }
+    if(vec->size != 0){
+        fatal_terminate("This array is not assignable by a list");
         return;
     }
     for(size_t i = 0; i < n ; i++){
@@ -106,40 +106,40 @@ void ivec_assign(IVec* vec,size_t n,int* list){
 
 void ivec_push(IVec* vec,int num){
     if(!vec){
-        puts("Null ptr passed to the push()");
+        fatal_terminate("Null Ptr Passed to the ivec_push()");
         return;
     }
-    if(vec->size < vec->capacity){
-        *(vec->data + vec->size) = num;
-        vec->size++;
-    }
-    else{
-        if(vec->size >= maxSafeSize){
-            puts("This Vector Reached Maximum Possible Size");
-            return;
-        }
-        int* dummy = realloc(vec->data,vec->el_size * (vec->capacity * 2));
-        if(!dummy){
-            fprintf(stderr,"Container Re-Allocation Failed push");
-            return;
+    if(vec->size <= maxSafeSize){
+        if(vec->size < vec->capacity){
+            *(vec->data + vec->size) = num;
+            vec->size++;
         }
         else{
+            int* dummy = realloc(vec->data,vec->el_size * (vec->capacity * 2));
+            if(!dummy){
+                fatal_terminate("Container Re-Allocation Failed");
+                return;
+            }
             vec->data = dummy;
             dummy = NULL;
             vec->capacity *= 2;
             *(vec->data + vec->size) = num;
             vec->size++;
-       }
+        }
+    }
+    else{
+        fatal_terminate("This vector reached max possible size");
+        return;
     }
 }
 
 void ivec_pop(IVec* vec){
     if(!vec){
-        puts("Null ptr passed to the pop()");
+        fatal_terminate("Null ptr passed to the pop()");
         return;
     }
     if(vec->size == 0){
-        puts("This vector is not popable...");
+        fatal_terminate("This vector is not popable...");
         return;
 
     }
@@ -149,7 +149,7 @@ void ivec_pop(IVec* vec){
     if(vec->size >= 32 && vec->size == vec->capacity / 4){ 
         int* dummy = realloc(vec->data, (vec->capacity / 2) * vec->el_size);
         if(!dummy){
-            fprintf(stderr,"Container Re-Allocation Failed pop");
+            fatal_terminate("Container Re-Allocation Failed pop");
             return;
         }
         vec->data = dummy;
@@ -161,15 +161,15 @@ void ivec_pop(IVec* vec){
 
 void ivec_clear(IVec* vec){
     if(!vec){
-        puts("Null ptr passed to the clear()");
+        fatal_terminate("Null ptr passed to the clear()");
         return;
     }
     vec->size = 0;
 }
 
 void ivec_free(IVec** ptr_vec){
-    if(!ptr_vec){
-        puts("Null ptr passed to the free()");
+    if(!ptr_vec || !(*ptr_vec)){
+        fatal_terminate("Null ptr passed to the free()");
         return;
     }
     //Container Dealloc
@@ -179,4 +179,7 @@ void ivec_free(IVec** ptr_vec){
     free(*ptr_vec);
     *ptr_vec = NULL;
 }
-
+static void fatal_terminate(const char* err){
+    fprintf(stderr,"VECTOR_ERR_MSG: %s" ,err);
+    exit(EXIT_FAILURE);
+}
