@@ -1,5 +1,5 @@
 #include "vector.h"
-
+#define maxSafeSize (size_t)((SIZE_MAX / 2) + 1)
 
 struct IVec {
     size_t size;
@@ -37,7 +37,7 @@ IVec* ivec_init(){
         return NULL;
     }
     //size =  auto 0 init by calloc
-    vec->capacity = 20;
+    vec->capacity = 32;
     vec->el_size = sizeof(int);
     if(!(vec->data = calloc(vec->capacity,vec->el_size))){
         fprintf(stderr,"Container Allocation Failed");
@@ -45,21 +45,21 @@ IVec* ivec_init(){
     }
     return vec;
 }
-size_t ivec_size(IVec* vec){
+size_t ivec_size(const IVec* vec){
     if(!vec){
         puts("Null ptr passed to the size()");
         return 0;
     }
     return vec->size;
 }
-size_t ivec_capacity(IVec* vec){
+size_t ivec_capacity(const IVec* vec){
     if(!vec){
         puts("Null ptr passed to the capacity()");
         return 0;
     }
     return vec->capacity;
 }
-int ivec_get(IVec* vec,size_t index){
+int ivec_get(const IVec* vec,size_t index){
     if(!vec){
         puts("Null ptr passed to the get()");
         return 0; // WILL RETURN A DISTINGUİSBLE ERROR VALUE LATER
@@ -114,6 +114,10 @@ void ivec_push(IVec* vec,int num){
         vec->size++;
     }
     else{
+        if(vec->size >= maxSafeSize){
+            puts("This Vector Reached Maximum Possible Size");
+            return;
+        }
         int* dummy = realloc(vec->data,vec->el_size * (vec->capacity * 2));
         if(!dummy){
             fprintf(stderr,"Container Re-Allocation Failed push");
@@ -125,7 +129,7 @@ void ivec_push(IVec* vec,int num){
             vec->capacity *= 2;
             *(vec->data + vec->size) = num;
             vec->size++;
-        }
+       }
     }
 }
 
@@ -134,16 +138,15 @@ void ivec_pop(IVec* vec){
         puts("Null ptr passed to the pop()");
         return;
     }
-    if(vec->size <= 0){
-        puts("This vector cannot popable...");
+    if(vec->size == 0){
+        puts("This vector is not popable...");
         return;
 
     }
 
-    *(vec->data + vec->size - 1) = 0;
     vec->size--;
 
-    if(vec->size >= 20 && vec->size == vec->capacity / 4){ 
+    if(vec->size >= 32 && vec->size == vec->capacity / 4){ 
         int* dummy = realloc(vec->data, (vec->capacity / 2) * vec->el_size);
         if(!dummy){
             fprintf(stderr,"Container Re-Allocation Failed pop");

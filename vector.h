@@ -14,15 +14,15 @@ typedef struct UIVec UIVec;
 
 IVec* ivec_init();
 
-size_t ivec_size(IVec* vec);
+size_t ivec_size(const IVec* vec);
 
-size_t ivec_capacity(IVec* vec);
+size_t ivec_capacity(const IVec* vec);
 
-int ivec_get(IVec* vec,size_t index);
+int ivec_get(const IVec* vec,size_t index);
 
 void ivec_set(IVec* vec,size_t index,int num);
 
-void ivec_assign(IVec* vec,size_t n,int* list); //X
+void ivec_assign(IVec* vec,size_t n,int* list); 
 
 void ivec_push(IVec* vec,int num);
 
