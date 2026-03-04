@@ -13,6 +13,17 @@ typedef struct DVec DVec;
 
 typedef struct UIVec UIVec;
 
+enum RETCODES{
+    OOB_ACCESS = -1,
+    SUCCESS = 0,
+    INVALID_PTR_PASSED = 1,
+    VEC_TOO_SMALL = 2,
+    AT_MAX_CAPACITY = 3,
+    REALLOC_FAILED = 4,
+    ASSIGN_FAILED = 5
+
+};
+
 IVec* ivec_init();
 
 size_t ivec_size(const IVec* vec);
