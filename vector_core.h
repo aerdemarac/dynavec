@@ -5,8 +5,6 @@
 #ifndef VECTOR_CORE_H
 #define VECTOR_CORE_H
 
-
-
 typedef struct IVec IVec;
  
 typedef struct CVec CVec;
@@ -14,7 +12,6 @@ typedef struct CVec CVec;
 typedef struct DVec DVec;
 
 typedef struct UIVec UIVec;
-
 
 IVec* ivec_init();
 
@@ -35,6 +32,5 @@ int ivec_pop(IVec* vec);
 int ivec_clear(IVec* vec);
 
 int ivec_free(IVec** vec);
-
 
 #endif

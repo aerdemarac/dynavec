@@ -3,10 +3,6 @@
 #ifndef VECTOR_ADV_H
 #define VECTOR_ADV_H
 
-
-
-
-//UNSAFE Methods
 int ivec_get(const IVec* vec,size_t index);
 
 const int* ivec_cend(IVec* vec);
