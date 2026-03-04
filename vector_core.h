@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#ifndef VECTOR_CORE_H
+#define VECTOR_CORE_H
+
+
 
 typedef struct IVec IVec;
  
@@ -18,9 +22,7 @@ size_t ivec_size(const IVec* vec);
 
 size_t ivec_capacity(const IVec* vec);
 
-int ivec_get(const IVec* vec,size_t index);
-
-int* ivec_sget(const IVec* vec,size_t index); 
+int ivec_sget(const IVec* vec,size_t index,int* out); 
 
 int ivec_set(IVec* vec,size_t index,int num);
 
@@ -35,3 +37,4 @@ int ivec_clear(IVec* vec);
 int ivec_free(IVec** vec);
 
 
+#endif

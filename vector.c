@@ -1,4 +1,4 @@
-#include "vector.h"
+#include "vector_core.h"
 #define maxSafeSize (size_t)(SIZE_MAX / 2) 
 
 struct IVec {
@@ -60,15 +60,16 @@ size_t ivec_capacity(const IVec* vec){
 int ivec_get(const IVec* vec,size_t index){ // UNSAFE Version
         return *(vec->data + index);
 }
-int* ivec_sget(const IVec* vec,size_t index){ // SAFE Version
-    if(!vec){
-        return NULL;
+int ivec_sget(const IVec* vec,size_t index,int* out){ // SAFE Version
+    if(!vec||!out){
+        return -1;
     }
     if(index < vec->size){
-        return (vec->data + index);
+        *out = *(vec->data + index);
+        return 0;
     }
     else{
-        return NULL;
+        return 1;
     }
 }
 int ivec_set(IVec* vec,size_t index,int num){
@@ -152,7 +153,6 @@ int ivec_pop(IVec* vec){
     return 0;
 
 }
-
 int ivec_clear(IVec* vec){
     if(!vec){
         return -1;
@@ -172,4 +172,21 @@ int ivec_free(IVec** ptr_vec){
     free(*ptr_vec);
     *ptr_vec = NULL;
     return 0;
+}
+
+//ADV
+const int* ivec_cend(IVec* vec){
+    return (vec->data + vec->size);
+}
+
+const int* ivec_cbegin(IVec* vec){
+    return (vec->data);
+}
+
+int* ivec_end(IVec* vec){
+    return (vec->data + vec->size);
+}
+
+int* ivec_begin(IVec* vec){
+    return (vec->data);
 }
