@@ -6,42 +6,37 @@
 struct IVec {
     size_t size;
     size_t capacity;
-    size_t el_size;
     int* data;
 };
  
 struct CVec {
     size_t size;
     size_t capacity;
-    size_t el_size;
     char* data;
 };
 
 struct DVec {
     size_t size;
     size_t capacity;
-    size_t el_size;
     double* data;
 };
 
 struct UIVec {
     size_t size;
     size_t capacity;
-    size_t el_size;
     unsigned* data;
 };
 
 static void ivec_corrupt_check(IVec* vec); // Debug Only
                                            
-IVec* ivec_init(){
+IVec* ivec_init(void){
     IVec* vec;
     if(!(vec = calloc(1,sizeof(IVec)))){
         //NULL is returned when object allocation fails
         return NULL;
     }
     vec->capacity = DEFAULT_CAPACITY;
-    vec->el_size = sizeof(int);
-    if(!(vec->data = calloc(vec->capacity,vec->el_size))){
+    if(!(vec->data = calloc(vec->capacity,sizeof(int)))){
         //NULL is returned when vector allocation fails
         free(vec);
         vec = NULL;
@@ -102,7 +97,7 @@ int ivec_assign(IVec* vec,size_t n,int* list){
             return ASSIGN_FAILED;
         }
     }
-    return 0;
+    return SUCCESS;
 }
 
 int ivec_push(IVec* vec,int num){
@@ -117,7 +112,7 @@ int ivec_push(IVec* vec,int num){
             return SUCCESS;
         }
         else{// If vector has no room to push double the capacity and push the element
-            int* dummy = realloc(vec->data,vec->el_size * (vec->capacity * 2));
+            int* dummy = realloc(vec->data, sizeof(int) * (vec->capacity * 2));
             if(!dummy){ //In case realloc fails, dummy prevents the mem address loss
                 return REALLOC_FAILED;
             }
@@ -145,7 +140,7 @@ int ivec_pop(IVec* vec){
     }
     vec->size--;
     if(vec->size >= DEFAULT_CAPACITY && vec->size <= vec->capacity / 4){ //Prevents trashing by shrinking capacity the DEFAULT_CAPACITY most
-        int* dummy = realloc(vec->data, (vec->capacity / 2) * vec->el_size);
+        int* dummy = realloc(vec->data, (vec->capacity / 2) * sizeof(int));
         if(!dummy){ //In case realloc fails, dummy prevents the mem address loss
             return REALLOC_FAILED;
         }

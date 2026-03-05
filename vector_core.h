@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdint.h>
 
 #ifndef VECTOR_CORE_H
@@ -24,7 +23,7 @@ enum RETCODES{
 
 };
 
-IVec* ivec_init();
+IVec* ivec_init(void);
 
 size_t ivec_size(const IVec* vec);
 
