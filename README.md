@@ -1,4 +1,4 @@
-![Dynavec Banner](https://github.com/user-attachments/assets/3f15631b-b054-4581-b9fa-88d2e19c91ef)
+![Banner](https://i.imgur.com/lvNKVsT.png)
 ![C](https://img.shields.io/badge/language-C-blue)
 ![Standard](https://img.shields.io/badge/ISO-C99-green)
 ![MIT](https://img.shields.io/badge/license-MIT-yellow)
