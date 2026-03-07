@@ -15,7 +15,7 @@
 - Strict ISO C99 compliance  
 - No external dependencies
 - High portability and predictable, safe memory behavior  
-- Type Safe and Safety First Approach
+- Type-safe and security first approach
 
 ---
 
