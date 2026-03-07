@@ -1,0 +1,35 @@
+# Copy Paste Polymorphism 
+# MAKE İT SINGLE HEADER FILE LIB WITH IMPLEMENTATION MACRO 
+# DynaVec Architectures and Compilers
+
+# x86 / x86_64
+
+* x86 32-bit: GCC (-m32), Clang, MSVC # DONE
+* x86_64: GCC, Clang, MSVC, TCC # DONE 
+
+# ARM
+
+* ARM 32-bit (armv6, armv7): arm-linux-gnueabi-gcc, arm-linux-gnueabihf-gcc # DONE
+* ARM 64-bit (aarch64): aarch64-linux-gnu-gcc
+
+# RISC-V
+
+* RISC-V 32-bit: riscv32-unknown-elf-gcc
+* RISC-V 64-bit: riscv64-unknown-elf-gcc
+
+# MIPS
+
+* MIPS 32-bit: mips-linux-gnu-gcc
+* MIPS 64-bit: mips64-linux-gnuabi64-gcc
+
+# PowerPC
+
+* PowerPC 32-bit: powerpc-linux-gnu-gcc
+* PowerPC 64-bit: powerpc64-linux-gnu-gcc
+
+# Optional / Exotic Targets
+
+* SPARC: sparc-linux-gnu-gcc
+* IA-64 / Itanium: ia64-linux-gnu-gcc
+* Embedded ARM Cortex-M: arm-none-eabi-gcc
+
