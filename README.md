@@ -13,9 +13,9 @@
 ## Features
 
 - Strict ISO C99 compliance  
-- No external dependencies  
-- High portability and predictable and safe memory behavior  
-- Simple integration into existing C projects
+- No external dependencies
+- High portability and predictable, safe memory behavior  
+- Type Safe and Safety First Approach
 
 ---
 
