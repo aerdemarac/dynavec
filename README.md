@@ -14,7 +14,7 @@
 
 - Strict ISO C99 compliance  
 - No external dependencies  
-- High portability and predictable memory behavior  
+- High portability and predictable and safe memory behavior  
 - Simple integration into existing C projects
 
 ---
