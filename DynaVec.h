@@ -130,6 +130,8 @@ int uivec_clear(UIVec* vec);
 
 int uivec_free(UIVec** vec);
 
+// !!Warning!!: Pointers returned by *_cbegin(),*_cend(),*_begin(),*_end() is invalidated if vector grows or shrinks.
+
 //Integer Specific Advanced Methods
 int ivec_get(const IVec* vec,size_t index);
 
