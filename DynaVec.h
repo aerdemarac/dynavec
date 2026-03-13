@@ -26,7 +26,7 @@
 #define maxSafeSize (size_t)(SIZE_MAX / 2) //Defines the possible maximum size for the vector
 #define DEFAULT_CAPACITY 32 // Vector's default capacity
 
-typedef struct IVec IVec;
+typedef struct IVec IVec; //Partially opaque structs, internals can be accessed with implementation macro (Deprecated)
  
 typedef struct CVec CVec;
 
@@ -44,7 +44,7 @@ enum RETCODES{
     ASSIGN_FAILED = 5,
     INTERNAL_CORRUPTION = 6
 
-};
+}; //Check README.md for comperhensive explanation on return values.
 
 //Integer Specific Methods
 IVec* ivec_init(void);
