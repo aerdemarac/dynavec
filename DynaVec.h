@@ -296,7 +296,7 @@ int ivec_push(IVec* vec,int num){
         return INVALID_PTR_PASSED;
     }
     if(vec->size <= maxSafeSize / 2){ // Prevents over-growth of the vector
-        if(vec->size < vec->capacity){//If vector has room set the one past element to the provided argument
+        if(vec->size < vec->capacity){//If vector has room for the upcoming push 
             *(vec->data + vec->size) = num;
             vec->size++;
             return SUCCESS;
@@ -466,7 +466,7 @@ int cvec_push(CVec* vec,char ch){
         return INVALID_PTR_PASSED;
     }
     if(vec->size <= maxSafeSize / 2){ // Prevents over-growth of the vector
-        if(vec->size < vec->capacity){//If vector has room set the one past element to the provided argument
+        if(vec->size < vec->capacity){//If vector has room for the upcoming push
             *(vec->data + vec->size) = ch;
             vec->size++;
             return SUCCESS;
@@ -629,7 +629,7 @@ int dvec_push(DVec* vec,double num){
         return INVALID_PTR_PASSED;
     }
     if(vec->size <= maxSafeSize / 2){ // Prevents over-growth of the vector
-        if(vec->size < vec->capacity){//If vector has room set the one past element to the provided argument
+        if(vec->size < vec->capacity){//If vector has room for the upcoming push
             *(vec->data + vec->size) = num;
             vec->size++;
             return SUCCESS;
@@ -792,7 +792,7 @@ int uivec_push(UIVec* vec,unsigned num){
         return INVALID_PTR_PASSED;
     }
     if(vec->size <= maxSafeSize / 2){ // Prevents over-growth of the vector
-        if(vec->size < vec->capacity){//If vector has room set the one past element to the provided argument
+        if(vec->size < vec->capacity){//If vector has room for the upcoming push
             *(vec->data + vec->size) = num;
             vec->size++;
             return SUCCESS;
