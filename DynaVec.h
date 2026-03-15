@@ -183,7 +183,7 @@ int cvec_corrupt_check(const CVec* vec); // Debug Only
 int dvec_corrupt_check(const DVec* vec); // Debug Only
 int uivec_corrupt_check(const UIVec* vec); // Debug Only
 
-#ifdef DYNAVEC_IMPLEMENTATION
+#ifdef DYNAVEC_ON
 struct IVec {
     size_t size;
     size_t capacity;
@@ -934,7 +934,7 @@ int uivec_corrupt_check(const UIVec* vec){
 #endif
 
 #ifdef DYNAVEC_ENABLE_ADVANCED
-#ifdef DYNAVEC_IMPLEMENTATION
+#ifdef DYNAVEC_ON
 //Advance Integer Methods (Can be accessed by including vector_adv.h)
 int ivec_get(const IVec* vec,size_t index){ //Considered Advance since this method is pre-conditional and does not report the failure
     return *(vec->data + index);

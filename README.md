@@ -35,7 +35,7 @@ Methods follow the pattern: `{type-prefix}vec_{method_name}();`
 Dynavec provides two layers controlled via macros:
 
 ```c
-#define DYNAVEC_IMPLEMENTATION      // Core API (safe)
+#define DYNAVEC_ON      // Core API (safe)
 #define DYNAVEC_ENABLE_ADVANCED     // Advanced API (performance)
 ```
 
@@ -78,7 +78,7 @@ Dynavec provides two layers controlled via macros:
 ## Quick Example
 
 ```c
-#define DYNAVEC_IMPLEMENTATION
+#define DYNAVEC_ON
 #include "dynavec.h"
 #include <stdio.h>
 
