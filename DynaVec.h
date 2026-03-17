@@ -57,7 +57,7 @@ int ivec_sget(const IVec* vec,size_t index,int* out);
 
 int ivec_set(IVec* vec,size_t index,int num);
 
-int ivec_assign(IVec* vec,size_t n,int* list); 
+int ivec_assign(IVec* vec,size_t n,const int* list); 
 
 int ivec_push(IVec* vec,int num);
 
@@ -78,7 +78,7 @@ int cvec_sget(const CVec* vec,size_t index,char* out);
 
 int cvec_set(CVec* vec,size_t index,char ch);
 
-int cvec_assign(CVec* vec,size_t n,char* list); 
+int cvec_assign(CVec* vec,size_t n,const char* list); 
 
 int cvec_push(CVec* vec,char ch);
 
@@ -99,7 +99,7 @@ int dvec_sget(const DVec* vec,size_t index,double* out);
 
 int dvec_set(DVec* vec,size_t index,double num);
 
-int dvec_assign(DVec* vec,size_t n,double* list); 
+int dvec_assign(DVec* vec,size_t n,const double* list); 
 
 int dvec_push(DVec* vec,double num);
 
@@ -120,7 +120,7 @@ int uivec_sget(const UIVec* vec,size_t index,unsigned* out);
 
 int uivec_set(UIVec* vec,size_t index,unsigned num);
 
-int uivec_assign(UIVec* vec,size_t n,unsigned* list); 
+int uivec_assign(UIVec* vec,size_t n,const unsigned* list); 
 
 int uivec_push(UIVec* vec,unsigned num);
 
@@ -271,7 +271,7 @@ int ivec_set(IVec* vec,size_t index,int num){
     }
 }
 
-int ivec_assign(IVec* vec,size_t n,int* list){
+int ivec_assign(IVec* vec,size_t n,const int* list){
     if(ivec_corrupt_check(vec)){
         return INTERNAL_CORRUPTION;
     }
@@ -441,7 +441,7 @@ int cvec_set(CVec* vec,size_t index,char ch){
 }
 
 
-int cvec_assign(CVec* vec,size_t n,char* list){
+int cvec_assign(CVec* vec,size_t n,const char* list){
     if(cvec_corrupt_check(vec)){
         return INTERNAL_CORRUPTION;
     }
@@ -604,7 +604,7 @@ int dvec_set(DVec* vec,size_t index,double num){
     }
 }
 
-int dvec_assign(DVec* vec,size_t n,double* list){
+int dvec_assign(DVec* vec,size_t n,const double* list){
     if(dvec_corrupt_check(vec)){
         return INTERNAL_CORRUPTION;
     }
@@ -767,7 +767,7 @@ int uivec_set(UIVec* vec,size_t index,unsigned num){
     }
 }
 
-int uivec_assign(UIVec* vec,size_t n,unsigned* list){
+int uivec_assign(UIVec* vec,size_t n,const unsigned* list){
     if(uivec_corrupt_check(vec)){
         return INTERNAL_CORRUPTION;
     }
