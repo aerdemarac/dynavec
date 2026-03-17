@@ -178,10 +178,10 @@ unsigned* uivec_end(UIVec* vec);
 
 
 //Internal Integrity Checker Methods
-int ivec_corrupt_check(const IVec* vec); // Debug Only
-int cvec_corrupt_check(const CVec* vec); // Debug Only
-int dvec_corrupt_check(const DVec* vec); // Debug Only
-int uivec_corrupt_check(const UIVec* vec); // Debug Only
+static inline int ivec_corrupt_check(const IVec* vec); // Debug Only
+static inline int cvec_corrupt_check(const CVec* vec); // Debug Only
+static inline int dvec_corrupt_check(const DVec* vec); // Debug Only
+static inline int uivec_corrupt_check(const UIVec* vec); // Debug Only
 
 #ifdef DYNAVEC_ON
 struct IVec {
@@ -240,11 +240,11 @@ size_t ivec_capacity(const IVec* vec){
 }
 
 int ivec_sget(const IVec* vec,size_t index,int* out){ // This method has a faster but less safe variant below 
-    if(ivec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec||!out){
         return INVALID_PTR_PASSED;
+    }
+    if(ivec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
         *out = *(vec->data + index);
@@ -256,11 +256,11 @@ int ivec_sget(const IVec* vec,size_t index,int* out){ // This method has a faste
 }
 
 int ivec_set(IVec* vec,size_t index,int num){
-    if(ivec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(ivec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
         *(vec->data + index) = num;
@@ -272,12 +272,12 @@ int ivec_set(IVec* vec,size_t index,int num){
 }
 
 int ivec_assign(IVec* vec,size_t n,const int* list){
-    if(ivec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec || !list) {
         return INVALID_PTR_PASSED;
     } // n == 0 case is not handled in order to keep sentinel values unique
+    if(ivec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
+    }
     ivec_clear(vec);
     for(size_t i = 0; i < n ; i++){ // Since array is cleared the safest method is pushing whatever in the provided array
         if(ivec_push(vec,*(list + i))){
@@ -289,11 +289,11 @@ int ivec_assign(IVec* vec,size_t n,const int* list){
 }
 
 int ivec_push(IVec* vec,int num){
-    if(ivec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(ivec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(vec->size <= maxSafeSize / 2){ // Prevents over-growth of the vector
         if(vec->size < vec->capacity){//If vector has room for the upcoming push 
@@ -320,11 +320,11 @@ int ivec_push(IVec* vec,int num){
 }
 
 int ivec_pop(IVec* vec){
-    if(ivec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(ivec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(vec->size == 0){
         return VEC_TOO_SMALL;
@@ -345,11 +345,11 @@ int ivec_pop(IVec* vec){
 }
 
 int ivec_clear(IVec* vec){ // Doesnt manipulate the vector capacity since user will be dealing with same amount numbers before the clear() call
-    if(ivec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(ivec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(!vec->size){ 
         return SUCCESS;
@@ -389,9 +389,6 @@ CVec* cvec_init(void){
 }
 
 size_t cvec_size(const CVec* vec){
-    if(cvec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return SIZE_MAX; // Sentinel value returned to clearly report the error
     }
@@ -399,9 +396,6 @@ size_t cvec_size(const CVec* vec){
 }
 
 size_t cvec_capacity(const CVec* vec){
-    if(cvec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return SIZE_MAX; // Sentinel value returned to clearly report the error
     }
@@ -409,11 +403,11 @@ size_t cvec_capacity(const CVec* vec){
 }
 
 int cvec_sget(const CVec* vec,size_t index,char* out){ // This method has a faster but less safe variant below 
-    if(cvec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec||!out){
         return INVALID_PTR_PASSED;
+    }
+    if(cvec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
         *out = *(vec->data + index);
@@ -425,11 +419,11 @@ int cvec_sget(const CVec* vec,size_t index,char* out){ // This method has a fast
 }
 
 int cvec_set(CVec* vec,size_t index,char ch){
-    if(cvec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(cvec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
         *(vec->data + index) = ch;
@@ -442,12 +436,12 @@ int cvec_set(CVec* vec,size_t index,char ch){
 
 
 int cvec_assign(CVec* vec,size_t n,const char* list){
-    if(cvec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec || !list) {
         return INVALID_PTR_PASSED;
     } // n == 0 case is not handled in order to keep sentinel values unique
+    if(cvec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
+    }
     cvec_clear(vec);
     for(size_t i = 0; i < n ; i++){ // Since array is cleared the safest method is pushing whatever in the provided array
         if(cvec_push(vec,*(list + i))){ // If pushing the next elemement ın the initializer list fails
@@ -459,11 +453,11 @@ int cvec_assign(CVec* vec,size_t n,const char* list){
 }
 
 int cvec_push(CVec* vec,char ch){
-    if(cvec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(cvec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(vec->size <= maxSafeSize / 2){ // Prevents over-growth of the vector
         if(vec->size < vec->capacity){//If vector has room for the upcoming push
@@ -490,11 +484,11 @@ int cvec_push(CVec* vec,char ch){
 }
 
 int cvec_pop(CVec* vec){
-    if(cvec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(cvec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(vec->size == 0){
         return VEC_TOO_SMALL;
@@ -515,11 +509,11 @@ int cvec_pop(CVec* vec){
 }
 
 int cvec_clear(CVec* vec){ // Doesnt manipulate the vector capacity since user will be dealing with same amount numbers before the clear() call
-    if(cvec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(cvec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(!vec->size){ 
         return SUCCESS;
@@ -573,11 +567,11 @@ size_t dvec_capacity(const DVec* vec){
 }
 
 int dvec_sget(const DVec* vec,size_t index,double* out){ // This method has a faster but less safe variant below 
-    if(dvec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec||!out){
         return INVALID_PTR_PASSED;
+    }
+    if(dvec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
         *out = *(vec->data + index);
@@ -589,11 +583,11 @@ int dvec_sget(const DVec* vec,size_t index,double* out){ // This method has a fa
 }
 
 int dvec_set(DVec* vec,size_t index,double num){
-    if(dvec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(dvec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
         *(vec->data + index) = num;
@@ -605,12 +599,12 @@ int dvec_set(DVec* vec,size_t index,double num){
 }
 
 int dvec_assign(DVec* vec,size_t n,const double* list){
-    if(dvec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec || !list) {
         return INVALID_PTR_PASSED;
     } // n == 0 case is not handled in order to keep sentinel values unique
+    if(dvec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
+    }
     dvec_clear(vec);
     for(size_t i = 0; i < n ; i++){ // Since array is cleared the safest method is pushing whatever in the provided array
         if(dvec_push(vec,*(list + i))){
@@ -622,11 +616,11 @@ int dvec_assign(DVec* vec,size_t n,const double* list){
 }
 
 int dvec_push(DVec* vec,double num){
-    if(dvec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION; 
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(dvec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION; 
     }
     if(vec->size <= maxSafeSize / 2){ // Prevents over-growth of the vector
         if(vec->size < vec->capacity){//If vector has room for the upcoming push
@@ -653,11 +647,11 @@ int dvec_push(DVec* vec,double num){
 }
 
 int dvec_pop(DVec* vec){
-    if(dvec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION; 
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(dvec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION; 
     }
     if(vec->size == 0){
         return VEC_TOO_SMALL;
@@ -678,11 +672,11 @@ int dvec_pop(DVec* vec){
 }
 
 int dvec_clear(DVec* vec){ // Doesnt manipulate the vector capacity since user will be dealing with same amount numbers before the clear() call
-    if(dvec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(dvec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(!vec->size){ 
         return SUCCESS;
@@ -736,11 +730,11 @@ size_t uivec_capacity(const UIVec* vec){
 }
 
 int uivec_sget(const UIVec* vec,size_t index,unsigned* out){ // This method has a faster but less safe variant below 
-    if(uivec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec||!out){
         return INVALID_PTR_PASSED;
+    }
+    if(uivec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
         *out = *(vec->data + index);
@@ -752,11 +746,11 @@ int uivec_sget(const UIVec* vec,size_t index,unsigned* out){ // This method has 
 }
 
 int uivec_set(UIVec* vec,size_t index,unsigned num){
-    if(uivec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(uivec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
         *(vec->data + index) = num;
@@ -768,12 +762,12 @@ int uivec_set(UIVec* vec,size_t index,unsigned num){
 }
 
 int uivec_assign(UIVec* vec,size_t n,const unsigned* list){
-    if(uivec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec || !list) {
         return INVALID_PTR_PASSED;
     } // n == 0 case is not handled in order to keep sentinel values unique
+    if(uivec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
+    }
     uivec_clear(vec);
     for(size_t i = 0; i < n ; i++){ // Since array is cleared the safest method is pushing whatever in the provided array
         if(uivec_push(vec,*(list + i))){
@@ -785,11 +779,11 @@ int uivec_assign(UIVec* vec,size_t n,const unsigned* list){
 }
 
 int uivec_push(UIVec* vec,unsigned num){
-    if(uivec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(uivec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(vec->size <= maxSafeSize / 2){ // Prevents over-growth of the vector
         if(vec->size < vec->capacity){//If vector has room for the upcoming push
@@ -816,11 +810,11 @@ int uivec_push(UIVec* vec,unsigned num){
 }
 
 int uivec_pop(UIVec* vec){
-    if(uivec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(uivec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(vec->size == 0){
         return VEC_TOO_SMALL;
@@ -841,11 +835,11 @@ int uivec_pop(UIVec* vec){
 }
 
 int uivec_clear(UIVec* vec){ // Doesnt manipulate the vector capacity since user will be dealing with same amount numbers before the clear() call
-    if(uivec_corrupt_check(vec)){
-        return INTERNAL_CORRUPTION;
-    }
     if(!vec){
         return INVALID_PTR_PASSED;
+    }
+    if(uivec_corrupt_check(vec)){
+        return INTERNAL_CORRUPTION;
     }
     if(!vec->size){ 
         return SUCCESS;
@@ -867,7 +861,7 @@ int uivec_free(UIVec** ptr_vec){
     return SUCCESS;
 }
 
-int ivec_corrupt_check(const IVec* vec){
+static inline int ivec_corrupt_check(const IVec* vec){
     int hasCorrupt = 0;
     if(!vec->data){
         hasCorrupt++;
@@ -883,7 +877,7 @@ int ivec_corrupt_check(const IVec* vec){
     }
     return hasCorrupt;
 }
-int cvec_corrupt_check(const CVec* vec){
+static inline int cvec_corrupt_check(const CVec* vec){
     int hasCorrupt = 0;
     if(!vec->data){
         hasCorrupt++;
@@ -899,7 +893,7 @@ int cvec_corrupt_check(const CVec* vec){
     }
     return hasCorrupt;
 }
-int dvec_corrupt_check(const DVec* vec){
+static inline int dvec_corrupt_check(const DVec* vec){
     int hasCorrupt = 0;
     if(!vec->data){
         hasCorrupt++;
@@ -915,7 +909,7 @@ int dvec_corrupt_check(const DVec* vec){
     }
     return hasCorrupt;
 }
-int uivec_corrupt_check(const UIVec* vec){
+static inline int uivec_corrupt_check(const UIVec* vec){
     int hasCorrupt = 0;
     if(!vec->data){
         hasCorrupt++;
