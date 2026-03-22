@@ -123,10 +123,10 @@ Dynavec is **strict ISO C99 compliant** and runs on **any platform with a C99-co
 
 ## Compilation
 
-Single-header, no build system required:
+Single-header, no build system required. Flag "-std=c99" is recommended:
 
 ```bash
-cc main.c -o program
+cc main.c -std=c99 -o program
 ```
 
 ---
