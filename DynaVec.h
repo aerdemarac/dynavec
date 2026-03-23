@@ -178,10 +178,10 @@ unsigned* uivec_end(UIVec* vec);
 
 
 //Internal Integrity Checker Methods
-static inline int ivec_corrupt_check(const IVec* vec); // Debug Only
-static inline int cvec_corrupt_check(const CVec* vec); // Debug Only
-static inline int dvec_corrupt_check(const DVec* vec); // Debug Only
-static inline int uivec_corrupt_check(const UIVec* vec); // Debug Only
+static inline int ivec_corrupt_check(const IVec* vec); 
+static inline int cvec_corrupt_check(const CVec* vec); 
+static inline int dvec_corrupt_check(const DVec* vec); 
+static inline int uivec_corrupt_check(const UIVec* vec); 
 
 #ifdef DYNAVEC_ON
 struct IVec {
@@ -212,12 +212,12 @@ struct UIVec {
 IVec* ivec_init(void){
     IVec* vec;
     if(!(vec = calloc(1,sizeof(IVec)))){
-        //NULL is returned when object allocation fails
+        //Returns NULL when object allocation fails
         return NULL;
     }
     vec->capacity = DEFAULT_CAPACITY;
     if(!(vec->data = calloc(vec->capacity,sizeof(int)))){
-        //NULL is returned when vector allocation fails
+        //Returns NULL when vector allocation fails
         free(vec);
         vec = NULL;
         return NULL;
@@ -303,7 +303,7 @@ int ivec_push(IVec* vec,int num){
         }
         else{// If vector has no room to push double the capacity and push the element
             int* dummy = realloc(vec->data, sizeof(int) * (vec->capacity * 2));
-            if(!dummy){ //In case realloc fails, dummy prevents the mem address loss
+            if(!dummy){ //In case realloc fails, dummy prevents the memory address loss
                 return REALLOC_FAILED;
             }
             vec->data = dummy;
@@ -331,9 +331,9 @@ int ivec_pop(IVec* vec){
 
     }
     vec->size--;
-    if(vec->size >= DEFAULT_CAPACITY && vec->size <= vec->capacity / 4){ //Prevents trashing by shrinking capacity the DEFAULT_CAPACITY most
+    if(vec->size >= DEFAULT_CAPACITY && vec->size <= vec->capacity / 4){ //Prevents trashing by shrinking capacity to the DEFAULT_CAPACITY at very least
         int* dummy = realloc(vec->data, (vec->capacity / 2) * sizeof(int));
-        if(!dummy){ //In case realloc fails, dummy prevents the mem address loss
+        if(!dummy){ //In case realloc fails, dummy prevents the memory address loss
             return REALLOC_FAILED;
         }
         vec->data = dummy;
@@ -344,7 +344,7 @@ int ivec_pop(IVec* vec){
     return SUCCESS;
 }
 
-int ivec_clear(IVec* vec){ // Doesnt manipulate the vector capacity since user will be dealing with same amount numbers before the clear() call
+int ivec_clear(IVec* vec){ // Doesnt manipulate the vector capacity since user will be dealing with same amount elements as before the clear() call
     if(!vec){
         return INVALID_PTR_PASSED;
     }
@@ -362,10 +362,10 @@ int ivec_free(IVec** ptr_vec){
     if(!ptr_vec || !(*ptr_vec)){
         return INVALID_PTR_PASSED;
     }
-    //Container Dealloc
+    //Container Deallocation
     free((*ptr_vec)->data);
     (*ptr_vec)->data = NULL;
-    //Struct Obj Dealloc
+    //Struct Object Deallocation
     free(*ptr_vec);
     *ptr_vec = NULL;
     return SUCCESS;
@@ -375,12 +375,12 @@ int ivec_free(IVec** ptr_vec){
 CVec* cvec_init(void){
     CVec* vec;
     if(!(vec = calloc(1,sizeof(CVec)))){
-        //NULL is returned when object allocation fails
+        //Returns NULL when object allocation fails
         return NULL;
     }
     vec->capacity = DEFAULT_CAPACITY;
     if(!(vec->data = calloc(vec->capacity,sizeof(char)))){
-        //NULL is returned when vector allocation fails
+        //Returns NULL when vector allocation fails
         free(vec);
         vec = NULL;
         return NULL;
@@ -444,7 +444,7 @@ int cvec_assign(CVec* vec,size_t n,const char* list){
     }
     cvec_clear(vec);
     for(size_t i = 0; i < n ; i++){ // Since array is cleared the safest method is pushing whatever in the provided array
-        if(cvec_push(vec,*(list + i))){ // If pushing the next elemement ın the initializer list fails
+        if(cvec_push(vec,*(list + i))){ // If pushing the next element in the initializer list fails
             cvec_clear(vec);
             return ASSIGN_FAILED;
         }
@@ -467,7 +467,7 @@ int cvec_push(CVec* vec,char ch){
         }
         else{// If vector has no room to push double the capacity and push the element
             char* dummy = realloc(vec->data, sizeof(char) * (vec->capacity * 2));
-            if(!dummy){ //In case realloc fails, dummy prevents the mem address loss
+            if(!dummy){ //In case realloc fails, dummy prevents the memory address loss
                 return REALLOC_FAILED;
             }
             vec->data = dummy;
@@ -495,9 +495,9 @@ int cvec_pop(CVec* vec){
 
     }
     vec->size--;
-    if(vec->size >= DEFAULT_CAPACITY && vec->size <= vec->capacity / 4){ //Prevents trashing by shrinking capacity the DEFAULT_CAPACITY most
+    if(vec->size >= DEFAULT_CAPACITY && vec->size <= vec->capacity / 4){ //Prevents trashing by shrinking capacity to the DEFAULT_CAPACITY at very least
         char* dummy = realloc(vec->data, (vec->capacity / 2) * sizeof(char));
-        if(!dummy){ //In case realloc fails, dummy prevents the mem address loss
+        if(!dummy){ //In case realloc fails, dummy prevents the memory address loss
             return REALLOC_FAILED;
         }
         vec->data = dummy;
@@ -508,7 +508,7 @@ int cvec_pop(CVec* vec){
     return SUCCESS;
 }
 
-int cvec_clear(CVec* vec){ // Doesnt manipulate the vector capacity since user will be dealing with same amount numbers before the clear() call
+int cvec_clear(CVec* vec){ // Doesnt manipulate the vector capacity since user will be dealing with same amount elements as before the clear() call
     if(!vec){
         return INVALID_PTR_PASSED;
     }
@@ -526,10 +526,10 @@ int cvec_free(CVec** ptr_vec){
     if(!ptr_vec || !(*ptr_vec)){
         return INVALID_PTR_PASSED;
     }
-    //Container Dealloc
+    //Container Deallocation
     free((*ptr_vec)->data);
     (*ptr_vec)->data = NULL;
-    //Struct Obj Dealloc
+    //Struct Object Deallocation
     free(*ptr_vec);
     *ptr_vec = NULL;
     return SUCCESS;
@@ -539,12 +539,12 @@ int cvec_free(CVec** ptr_vec){
 DVec* dvec_init(void){
     DVec* vec;
     if(!(vec = calloc(1,sizeof(DVec)))){
-        //NULL is returned when object allocation fails
+        //Returns NULL when object allocation fails
         return NULL;
     }
     vec->capacity = DEFAULT_CAPACITY;
     if(!(vec->data = calloc(vec->capacity,sizeof(double)))){
-        //NULL is returned when vector allocation fails
+        //Returns NULL when vector allocation fails
         free(vec);
         vec = NULL;
         return NULL;
@@ -630,7 +630,7 @@ int dvec_push(DVec* vec,double num){
         }
         else{// If vector has no room to push double the capacity and push the element
             double* dummy = realloc(vec->data, sizeof(double) * (vec->capacity * 2));
-            if(!dummy){ //In case realloc fails, dummy prevents the mem address loss
+            if(!dummy){ //In case realloc fails, dummy prevents the memory address loss
                 return REALLOC_FAILED;
             }
             vec->data = dummy;
@@ -658,9 +658,9 @@ int dvec_pop(DVec* vec){
 
     }
     vec->size--;
-    if(vec->size >= DEFAULT_CAPACITY && vec->size <= vec->capacity / 4){ //Prevents trashing by shrinking capacity the DEFAULT_CAPACITY most
+    if(vec->size >= DEFAULT_CAPACITY && vec->size <= vec->capacity / 4){ //Prevents trashing by shrinking capacity to the DEFAULT_CAPACITY at very least
         double* dummy = realloc(vec->data, (vec->capacity / 2) * sizeof(double));
-        if(!dummy){ //In case realloc fails, dummy prevents the mem address loss
+        if(!dummy){ //In case realloc fails, dummy prevents the memory address loss
             return REALLOC_FAILED;
         }
         vec->data = dummy;
@@ -671,7 +671,7 @@ int dvec_pop(DVec* vec){
     return SUCCESS;
 }
 
-int dvec_clear(DVec* vec){ // Doesnt manipulate the vector capacity since user will be dealing with same amount numbers before the clear() call
+int dvec_clear(DVec* vec){ // Doesnt manipulate the vector capacity since user will be dealing with same amount elements as before the clear() call
     if(!vec){
         return INVALID_PTR_PASSED;
     }
@@ -689,10 +689,10 @@ int dvec_free(DVec** ptr_vec){
     if(!ptr_vec || !(*ptr_vec)){
         return INVALID_PTR_PASSED;
     }
-    //Container Dealloc
+    //Container Deallocation
     free((*ptr_vec)->data);
     (*ptr_vec)->data = NULL;
-    //Struct Obj Dealloc
+    //Struct Object Deallocation
     free(*ptr_vec);
     *ptr_vec = NULL;
     return SUCCESS;
@@ -702,12 +702,12 @@ int dvec_free(DVec** ptr_vec){
 UIVec* uivec_init(void){
     UIVec* vec;
     if(!(vec = calloc(1,sizeof(UIVec)))){
-        //NULL is returned when object allocation fails
+        //Returns NULL when object allocation fails
         return NULL;
     }
     vec->capacity = DEFAULT_CAPACITY;
     if(!(vec->data = calloc(vec->capacity,sizeof(unsigned)))){
-        //NULL is returned when vector allocation fails
+        //Returns NULL when vector allocation fails
         free(vec);
         vec = NULL;
         return NULL;
@@ -769,7 +769,7 @@ int uivec_assign(UIVec* vec,size_t n,const unsigned* list){
         return INTERNAL_CORRUPTION;
     }
     uivec_clear(vec);
-    for(size_t i = 0; i < n ; i++){ // Since array is cleared the safest method is pushing whatever in the provided array
+    for(size_t i = 0; i < n ; i++){ // Since array is cleared, the safest method is pushing whatever in the provided array
         if(uivec_push(vec,*(list + i))){
             uivec_clear(vec);
             return ASSIGN_FAILED;
@@ -793,7 +793,7 @@ int uivec_push(UIVec* vec,unsigned num){
         }
         else{// If vector has no room to push double the capacity and push the element
             unsigned* dummy = realloc(vec->data, sizeof(unsigned) * (vec->capacity * 2));
-            if(!dummy){ //In case realloc fails, dummy prevents the mem address loss
+            if(!dummy){ //In case realloc fails, dummy prevents the memory address loss
                 return REALLOC_FAILED;
             }
             vec->data = dummy;
@@ -821,9 +821,9 @@ int uivec_pop(UIVec* vec){
 
     }
     vec->size--;
-    if(vec->size >= DEFAULT_CAPACITY && vec->size <= vec->capacity / 4){ //Prevents trashing by shrinking capacity the DEFAULT_CAPACITY most
+    if(vec->size >= DEFAULT_CAPACITY && vec->size <= vec->capacity / 4){ //Prevents trashing by shrinking capacity to the DEFAULT_CAPACITY at very least
         unsigned* dummy = realloc(vec->data, (vec->capacity / 2) * sizeof(unsigned));
-        if(!dummy){ //In case realloc fails, dummy prevents the mem address loss
+        if(!dummy){ //In case realloc fails, dummy prevents the memory address loss
             return REALLOC_FAILED;
         }
         vec->data = dummy;
@@ -834,7 +834,7 @@ int uivec_pop(UIVec* vec){
     return SUCCESS;
 }
 
-int uivec_clear(UIVec* vec){ // Doesnt manipulate the vector capacity since user will be dealing with same amount numbers before the clear() call
+int uivec_clear(UIVec* vec){ // Doesnt manipulate the vector capacity since user will be dealing with same amount elements as before the clear() call
     if(!vec){
         return INVALID_PTR_PASSED;
     }
@@ -852,10 +852,10 @@ int uivec_free(UIVec** ptr_vec){
     if(!ptr_vec || !(*ptr_vec)){
         return INVALID_PTR_PASSED;
     }
-    //Container Dealloc
+    //Container Deallocation
     free((*ptr_vec)->data);
     (*ptr_vec)->data = NULL;
-    //Struct Obj Dealloc
+    //Struct Object Deallocation
     free(*ptr_vec);
     *ptr_vec = NULL;
     return SUCCESS;
@@ -929,7 +929,7 @@ static inline int uivec_corrupt_check(const UIVec* vec){
 
 #ifdef DYNAVEC_ENABLE_ADVANCED
 #ifdef DYNAVEC_ON
-//Advance Integer Methods (Can be accessed by including vector_adv.h)
+//define DYNAVEC_ENABLE_ADVANCED macro in order to access advanced methods
 int ivec_get(const IVec* vec,size_t index){ //Considered Advance since this method is pre-conditional and does not report the failure
     return *(vec->data + index);
 }
@@ -950,7 +950,6 @@ int* ivec_begin(IVec* vec){
     return (vec->data);
 }
 
-//Advance Char Methods (Can be accessed by including vector_adv.h)
 char cvec_get(const CVec* vec,size_t index){ //Considered Advance since this method is pre-conditional and does not report the failure
     return *(vec->data + index);
 }
@@ -971,7 +970,6 @@ char* cvec_begin(CVec* vec){
     return vec->data;
 }
 
-//Advance Double Methods (Can be accessed by including vector_adv.h)
 double dvec_get(const DVec* vec,size_t index){ //Considered Advance since this method is pre-conditional and does not report the failure
     return *(vec->data + index);
 }
@@ -992,7 +990,6 @@ double* dvec_begin(DVec* vec){
     return vec->data;
 }
 
-//Advance Unsigned Integer Methods (Can be accessed by including vector_adv.h)
 unsigned uivec_get(const UIVec* vec,size_t index){ //Considered Advance since this method is pre-conditional and does not report the failure
     return *(vec->data + index);
 }

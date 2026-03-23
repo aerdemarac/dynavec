@@ -56,7 +56,6 @@ Dynavec provides two layers controlled via macros:
 | Assignment           | `*_assign()`                              |
 | Memory Management    | `*_clear()`, `*_free()`                   |
 | Advanced Access      | `*_get()`, `*_begin()`, `*_end()`        |
-| Debug / Integrity    | `*_corrupt_check()`                       |
 
 ---
 
