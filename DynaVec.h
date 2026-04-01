@@ -247,7 +247,7 @@ int ivec_sget(const IVec* vec,size_t index,int* out){ // This method has a faste
         return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
-        *out = *(vec->data + index);
+        *out = vec->data[index];
         return SUCCESS;
     }
     else{
@@ -263,7 +263,7 @@ int ivec_set(IVec* vec,size_t index,int num){
         return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
-        *(vec->data + index) = num;
+        vec->data[index] = num;
         return SUCCESS;
     }
     else{
@@ -280,7 +280,7 @@ int ivec_assign(IVec* vec,size_t n,const int* list){
     }
     ivec_clear(vec);
     for(size_t i = 0; i < n ; i++){ // Since array is cleared the safest method is pushing whatever in the provided array
-        if(ivec_push(vec,*(list + i))){
+        if(ivec_push(vec,list[i])){
             ivec_clear(vec);
             return ASSIGN_FAILED;
         }
@@ -297,7 +297,7 @@ int ivec_push(IVec* vec,int num){
     }
     if(vec->size <= maxSafeSize / 2){ // Prevents over-growth of the vector
         if(vec->size < vec->capacity){//If vector has room for the upcoming push 
-            *(vec->data + vec->size) = num;
+            vec->data[vec->size] = num;
             vec->size++;
             return SUCCESS;
         }
@@ -309,7 +309,7 @@ int ivec_push(IVec* vec,int num){
             vec->data = dummy;
             dummy = NULL;
             vec->capacity *= 2;
-            *(vec->data + vec->size) = num;
+            vec->data[vec->size] = num;
             vec->size++;
             return SUCCESS;
         }
@@ -410,7 +410,7 @@ int cvec_sget(const CVec* vec,size_t index,char* out){ // This method has a fast
         return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
-        *out = *(vec->data + index);
+        *out = vec->data[index];
         return SUCCESS;
     }
     else{
@@ -426,7 +426,7 @@ int cvec_set(CVec* vec,size_t index,char ch){
         return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
-        *(vec->data + index) = ch;
+        vec->data[index] = ch;
         return SUCCESS;
     }
     else{
@@ -444,7 +444,7 @@ int cvec_assign(CVec* vec,size_t n,const char* list){
     }
     cvec_clear(vec);
     for(size_t i = 0; i < n ; i++){ // Since array is cleared the safest method is pushing whatever in the provided array
-        if(cvec_push(vec,*(list + i))){ // If pushing the next element in the initializer list fails
+        if(cvec_push(vec,list[i])){ // If pushing the next element in the initializer list fails
             cvec_clear(vec);
             return ASSIGN_FAILED;
         }
@@ -461,7 +461,7 @@ int cvec_push(CVec* vec,char ch){
     }
     if(vec->size <= maxSafeSize / 2){ // Prevents over-growth of the vector
         if(vec->size < vec->capacity){//If vector has room for the upcoming push
-            *(vec->data + vec->size) = ch;
+            vec->data[vec->size] = ch;
             vec->size++;
             return SUCCESS;
         }
@@ -473,7 +473,7 @@ int cvec_push(CVec* vec,char ch){
             vec->data = dummy;
             dummy = NULL;
             vec->capacity *= 2;
-            *(vec->data + vec->size) = ch;
+            vec->data[vec->size] = ch;
             vec->size++;
             return SUCCESS;
         }
@@ -574,7 +574,7 @@ int dvec_sget(const DVec* vec,size_t index,double* out){ // This method has a fa
         return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
-        *out = *(vec->data + index);
+        *out = vec->data[index];
         return SUCCESS;
     }
     else{
@@ -590,7 +590,7 @@ int dvec_set(DVec* vec,size_t index,double num){
         return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
-        *(vec->data + index) = num;
+        vec->data[index] = num;
         return SUCCESS;
     }
     else{
@@ -607,7 +607,7 @@ int dvec_assign(DVec* vec,size_t n,const double* list){
     }
     dvec_clear(vec);
     for(size_t i = 0; i < n ; i++){ // Since array is cleared the safest method is pushing whatever in the provided array
-        if(dvec_push(vec,*(list + i))){
+        if(dvec_push(vec,list[i])){
             dvec_clear(vec);
             return ASSIGN_FAILED;
         }
@@ -624,7 +624,7 @@ int dvec_push(DVec* vec,double num){
     }
     if(vec->size <= maxSafeSize / 2){ // Prevents over-growth of the vector
         if(vec->size < vec->capacity){//If vector has room for the upcoming push
-            *(vec->data + vec->size) = num;
+            vec->data[vec->size] = num;
             vec->size++;
             return SUCCESS;
         }
@@ -636,7 +636,7 @@ int dvec_push(DVec* vec,double num){
             vec->data = dummy;
             dummy = NULL;
             vec->capacity *= 2;
-            *(vec->data + vec->size) = num;
+            vec->data[vec->size] = num;
             vec->size++;
             return SUCCESS;
         }
@@ -737,7 +737,7 @@ int uivec_sget(const UIVec* vec,size_t index,unsigned* out){ // This method has 
         return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
-        *out = *(vec->data + index);
+        *out = vec->data[index];
         return SUCCESS;
     }
     else{
@@ -753,7 +753,7 @@ int uivec_set(UIVec* vec,size_t index,unsigned num){
         return INTERNAL_CORRUPTION;
     }
     if(index < vec->size){
-        *(vec->data + index) = num;
+        vec->data[index] = num;
         return SUCCESS;
     }
     else{
@@ -770,7 +770,7 @@ int uivec_assign(UIVec* vec,size_t n,const unsigned* list){
     }
     uivec_clear(vec);
     for(size_t i = 0; i < n ; i++){ // Since array is cleared, the safest method is pushing whatever in the provided array
-        if(uivec_push(vec,*(list + i))){
+        if(uivec_push(vec,list[i])){
             uivec_clear(vec);
             return ASSIGN_FAILED;
         }
@@ -787,7 +787,7 @@ int uivec_push(UIVec* vec,unsigned num){
     }
     if(vec->size <= maxSafeSize / 2){ // Prevents over-growth of the vector
         if(vec->size < vec->capacity){//If vector has room for the upcoming push
-            *(vec->data + vec->size) = num;
+            vec->data[vec->size] = num;
             vec->size++;
             return SUCCESS;
         }
@@ -799,7 +799,7 @@ int uivec_push(UIVec* vec,unsigned num){
             vec->data = dummy;
             dummy = NULL;
             vec->capacity *= 2;
-            *(vec->data + vec->size) = num;
+            vec->data[vec->size] = num;
             vec->size++;
             return SUCCESS;
         }
@@ -931,7 +931,7 @@ static inline int uivec_corrupt_check(const UIVec* vec){
 #ifdef DYNAVEC_ON
 //define DYNAVEC_ENABLE_ADVANCED macro in order to access advanced methods
 int ivec_get(const IVec* vec,size_t index){ //Considered Advance since this method is pre-conditional and does not report the failure
-    return *(vec->data + index);
+    return vec->data[index];
 }
 
 const int* ivec_cend(const IVec* vec){
@@ -951,7 +951,7 @@ int* ivec_begin(IVec* vec){
 }
 
 char cvec_get(const CVec* vec,size_t index){ //Considered Advance since this method is pre-conditional and does not report the failure
-    return *(vec->data + index);
+    return vec->data[index];
 }
 
 const char* cvec_cend(const CVec* vec){
@@ -971,7 +971,7 @@ char* cvec_begin(CVec* vec){
 }
 
 double dvec_get(const DVec* vec,size_t index){ //Considered Advance since this method is pre-conditional and does not report the failure
-    return *(vec->data + index);
+    return vec->data[index];
 }
 
 const double* dvec_cend(const DVec* vec){
@@ -991,7 +991,7 @@ double* dvec_begin(DVec* vec){
 }
 
 unsigned uivec_get(const UIVec* vec,size_t index){ //Considered Advance since this method is pre-conditional and does not report the failure
-    return *(vec->data + index);
+    return vec->data[index];
 }
 
 const unsigned* uivec_cend(const UIVec* vec){
