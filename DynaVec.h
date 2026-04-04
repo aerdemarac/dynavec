@@ -65,7 +65,7 @@ int ivec_pop(IVec* vec);
 
 int ivec_clear(IVec* vec);
 
-int ivec_free(IVec** vec);
+int ivec_free(IVec** ptr_vec);
 
 //Char Specific Methods
 CVec* cvec_init(void);
@@ -86,7 +86,7 @@ int cvec_pop(CVec* vec);
 
 int cvec_clear(CVec* vec);
 
-int cvec_free(CVec** vec);
+int cvec_free(CVec** ptr_vec);
 
 //Double Specific Methods
 DVec* dvec_init(void);
@@ -107,7 +107,7 @@ int dvec_pop(DVec* vec);
 
 int dvec_clear(DVec* vec);
 
-int dvec_free(DVec** vec);
+int dvec_free(DVec** ptr_vec);
 
 //Unsigned Integer Specific Methods
 UIVec* uivec_init(void);
@@ -128,7 +128,7 @@ int uivec_pop(UIVec* vec);
 
 int uivec_clear(UIVec* vec);
 
-int uivec_free(UIVec** vec);
+int uivec_free(UIVec** ptr_vec);
 
 // !!Warning!!: Pointers returned by *_cbegin(),*_cend(),*_begin(),*_end() is invalidated if vector grows or shrinks.
 
